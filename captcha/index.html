@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'">
-    <title>Страница не найдена — ИП Баишев А.Р.</title>
-    <meta name="description" content="Страница не найдена на официальном сайте ИП Баишев А.Р..">
+    <title>Проверка «Я не робот» — ИП Баишев А.Р.</title>
+    <meta name="description" content="Проверка «Я не робот»: введите код с картинки.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#2F5BFF">
     <meta name="format-detection" content="telephone=no">
@@ -15,7 +15,9 @@
     <link rel="stylesheet" href="/assets/css/fonts.css?v=0fa0c763">
     <link rel="stylesheet" href="/assets/css/main.css?v=6128f374">
     <link rel="stylesheet" href="/assets/css/a11y.css?v=ca62450a">
+    <link rel="stylesheet" href="/assets/css/captcha.css?v=6f23457e">
     <script src="/assets/js/a11y.js?v=7f2c3b62" defer></script>
+    <script src="/assets/js/captcha.js?v=b23472e5" defer></script>
   </head>
   <body>
     <a href="#main" class="skip">Перейти к основному содержимому</a>
@@ -58,47 +60,55 @@
         </div>
       </div>
     </header>
-    <main id="main" class="main main--error" tabindex="-1">
+    <main id="main" class="main main--captcha" tabindex="-1">
       <div class="container">
         <div class="page-head">
           <nav class="breadcrumbs" aria-label="Навигация по сайту">
             <ol>
               <li><a href="/">Главная</a></li>
-              <li aria-current="page">Страница не найдена</li>
+              <li aria-current="page">Проверка «Я не робот»</li>
             </ol>
           </nav>
-          <h1 class="page-title">Страница не найдена</h1>
+          <h1 class="page-title">Проверка «Я не робот»</h1>
         </div>
         <div class="content prose">
-          <p class="error-code" aria-hidden="true">404</p>
-          <p class="lead">Запрошенная страница не найдена. Возможно, адрес набран с ошибкой или страница была перемещена.</p>
-          <p>Перейдите на нужную страницу:</p>
-          <ul class="cards">
-            <li>
-              <a href="/" class="card">
-                <span class="card__title">Главная страница</span>
-                <span class="card__arrow"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="M13 6l6 6l-6 6"/></svg></span>
-              </a>
-            </li>
-            <li>
-              <a href="/sveden/" class="card">
-                <span class="card__title">Сведения об образовательной организации</span>
-                <span class="card__arrow"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="M13 6l6 6l-6 6"/></svg></span>
-              </a>
-            </li>
-            <li>
-              <a href="/sveden/paid_edu/" class="card">
-                <span class="card__title">Платные образовательные услуги</span>
-                <span class="card__arrow"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="M13 6l6 6l-6 6"/></svg></span>
-              </a>
-            </li>
-            <li>
-              <a href="/privacy/" class="card">
-                <span class="card__title">Политика обработки персональных данных</span>
-                <span class="card__arrow"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="M13 6l6 6l-6 6"/></svg></span>
-              </a>
-            </li>
-          </ul>
+          <p class="lead">Введите цифры с картинки, чтобы подтвердить, что вы не робот. Введённый код никуда не отправляется и не сохраняется.</p>
+          <noscript><p class="note">Для проверки включите JavaScript в браузере.</p></noscript>
+          <div class="captcha" data-captcha hidden>
+            <form data-captcha-form novalidate aria-labelledby="captcha-title">
+              <h2 class="captcha__title" id="captcha-title">Подтвердите, что вы не робот</h2>
+              <canvas class="captcha__image" data-captcha-image width="240" height="80" role="img" aria-label="Код проверки: пять цифр с искажениями. Чтобы услышать код, нажмите кнопку «Прослушать код».">Код проверки</canvas>
+              <div class="captcha__tools">
+                <button type="button" class="captcha__tool" data-captcha-refresh>
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></svg>
+                  <span>Другой код</span>
+                </button>
+                <button type="button" class="captcha__tool" data-captcha-speak hidden>
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 8a5 5 0 0 1 0 8"/><path d="M17.7 5a9 9 0 0 1 0 14"/><path d="M6 15h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l3.5 -4.5a.8 .8 0 0 1 1.5 .5v14a.8 .8 0 0 1 -1.5 .5l-3.5 -4.5"/></svg>
+                  <span>Прослушать код</span>
+                </button>
+              </div>
+              <div class="captcha__field">
+                <label class="captcha__label" for="captcha-input">Код с картинки</label>
+                <p class="captcha__hint" id="captcha-hint">Пять цифр.</p>
+                <input class="captcha__input" id="captcha-input" data-captcha-input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false" required aria-describedby="captcha-hint captcha-error">
+                <p class="captcha__error" id="captcha-error" data-captcha-error hidden>
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+                  <span data-captcha-error-text></span>
+                </p>
+              </div>
+              <button type="submit" class="btn btn--primary">Проверить</button>
+            </form>
+            <div class="captcha__result" data-captcha-result hidden>
+              <h2 class="captcha__result-title" tabindex="-1" data-captcha-result-title>
+                <span class="captcha__result-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12l5 5l10 -10"/></svg></span>
+                <span>Проверка пройдена</span>
+              </h2>
+              <p>Код введён верно: вы не робот.</p>
+              <button type="button" class="btn btn--secondary" data-captcha-again>Пройти ещё раз</button>
+            </div>
+            <p class="sr-only" role="status" data-captcha-live></p>
+          </div>
         </div>
       </div>
     </main>
