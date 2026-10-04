@@ -1,0 +1,414 @@
+/*
+ * Версия для слабовидящих: стили.
+ * Файл действует ТОЛЬКО когда на <html> есть data-a11y="on" (сайт без него не меняется),
+ * кроме самой панели #a11y-panel, которая существует лишь после открытия.
+ * Перекрашивает сайт через переменные :root (см. контракт темы), без внешних ресурсов.
+ */
+
+/* ---------- 1. Цветовые схемы (переопределение переменных) ---------- */
+
+html[data-a11y="on"][data-a11y-scheme="bw"] {
+  --c-bg: #FFFFFF; --c-surface: #EDEDED; --c-surface-2: #D9D9D9;
+  --c-text: #000000; --c-text-2: #000000; --c-muted: #1A1A1A;
+  --c-primary: #000000; --c-primary-hover: #333333; --c-primary-ink: #FFFFFF;
+  --c-border: #000000; --c-focus: #0000FF;
+  --c-todo-bg: #FFEB3B; --c-todo-ink: #000000;
+  color-scheme: light;
+}
+html[data-a11y="on"][data-a11y-scheme="wb"] {
+  --c-bg: #000000; --c-surface: #1E1E1E; --c-surface-2: #333333;
+  --c-text: #FFFFFF; --c-text-2: #FFFFFF; --c-muted: #E6E6E6;
+  --c-primary: #FFFFFF; --c-primary-hover: #CCCCCC; --c-primary-ink: #000000;
+  --c-border: #FFFFFF; --c-focus: #FFFF00;
+  --c-todo-bg: #FFEB3B; --c-todo-ink: #000000;
+  color-scheme: dark;
+}
+html[data-a11y="on"][data-a11y-scheme="blue"] {
+  --c-bg: #9DD1FF; --c-surface: #C4E3FF; --c-surface-2: #B0D8FF;
+  --c-text: #063462; --c-text-2: #063462; --c-muted: #063462;
+  --c-primary: #063462; --c-primary-hover: #0B4A8C; --c-primary-ink: #FFFFFF;
+  --c-border: #063462; --c-focus: #000000;
+  --c-todo-bg: #FFEB3B; --c-todo-ink: #000000;
+  color-scheme: light;
+}
+html[data-a11y="on"][data-a11y-scheme="brown"] {
+  --c-bg: #3B2716; --c-surface: #4D3420; --c-surface-2: #5E4229;
+  --c-text: #A9E44D; --c-text-2: #A9E44D; --c-muted: #A9E44D;
+  --c-primary: #A9E44D; --c-primary-hover: #C4EE7A; --c-primary-ink: #3B2716;
+  --c-border: #A9E44D; --c-focus: #FFEB3B;
+  --c-todo-bg: #FFEB3B; --c-todo-ink: #000000;
+  color-scheme: dark;
+}
+
+/* Плитки: во всех схемах одинаковые, контрастные, с рамкой */
+html[data-a11y="on"][data-a11y-scheme] {
+  --tile-1-bg: var(--c-surface); --tile-1-num: var(--c-text); --tile-1-label: var(--c-text-2);
+  --tile-2-bg: var(--c-surface); --tile-2-num: var(--c-text); --tile-2-label: var(--c-text-2);
+  --tile-3-bg: var(--c-surface); --tile-3-num: var(--c-text); --tile-3-label: var(--c-text-2);
+}
+html[data-a11y="on"][data-a11y-scheme] [class~="tile"] {
+  border: 2px solid var(--c-border);
+}
+
+/* ---------- 2. Размер текста (в процентах от базового размера браузера) ---------- */
+
+html[data-a11y="on"][data-a11y-size="1"] { font-size: 100%; }
+html[data-a11y="on"][data-a11y-size="2"] { font-size: 125%; }
+html[data-a11y="on"][data-a11y-size="3"] { font-size: 150%; }
+html[data-a11y="on"][data-a11y-size="4"] { font-size: 175%; }
+
+/* ---------- 3. Межбуквенный интервал и интерлиньяж ---------- */
+
+html[data-a11y="on"][data-a11y-spacing="1"] { --ls: normal; --ws: normal; }
+html[data-a11y="on"][data-a11y-spacing="2"] { --ls: .06em; --ws: .12em; }
+html[data-a11y="on"][data-a11y-spacing="3"] { --ls: .12em; --ws: .24em; }
+
+html[data-a11y="on"][data-a11y-lh="1"] { --lh: 1.6; --lh-h: 1.3; }
+html[data-a11y="on"][data-a11y-lh="2"] { --lh: 1.9; --lh-h: 1.5; }
+html[data-a11y="on"][data-a11y-lh="3"] { --lh: 2.3; --lh-h: 1.8; }
+
+html[data-a11y="on"] body {
+  letter-spacing: var(--ls, normal);
+  word-spacing: var(--ws, normal);
+  line-height: var(--lh, 1.6);
+  overflow-wrap: anywhere;
+}
+html[data-a11y="on"] :is(header, nav, footer) :is(nav, ul, ol, div) {
+  flex-wrap: wrap;
+}
+html[data-a11y="on"] :is(nav, header nav) {
+  flex-wrap: wrap;
+}
+html[data-a11y="on"] body :is(p, li, td, th, dd, dt, blockquote, figcaption, summary, label, caption) {
+  line-height: var(--lh, 1.6);
+}
+html[data-a11y="on"] :is(td, th) {
+  overflow-wrap: break-word;
+}
+html[data-a11y="on"] body :is(.toc a, .pager__title, .panel__lead) {
+  line-height: var(--lh, 1.6);
+}
+html[data-a11y="on"] body :is(h1, h2, h3, h4, h5, h6) {
+  line-height: var(--lh-h, 1.3);
+}
+
+/* ---------- 4. Шрифт ---------- */
+
+html[data-a11y="on"][data-a11y-font="sans"] {
+  --font-body: Arial, "Helvetica Neue", "Segoe UI", Roboto, sans-serif;
+}
+html[data-a11y="on"][data-a11y-font="serif"] {
+  --font-body: Georgia, "Times New Roman", "PT Serif", Times, serif;
+}
+html[data-a11y="on"][data-a11y-font] body,
+html[data-a11y="on"][data-a11y-font] body *:not(svg):not(svg *) {
+  font-family: var(--font-body);
+}
+
+/* ---------- 5. Изображения ---------- */
+
+html[data-a11y="on"][data-a11y-img="off"] img,
+html[data-a11y="on"][data-a11y-img="off"] picture,
+html[data-a11y="on"][data-a11y-img="off"] video,
+html[data-a11y="on"][data-a11y-img="off"] canvas {
+  display: none !important;
+}
+html[data-a11y="on"][data-a11y-img="off"] *,
+html[data-a11y="on"][data-a11y-img="off"] *::before,
+html[data-a11y="on"][data-a11y-img="off"] *::after {
+  background-image: none !important;
+}
+
+/* ---------- 6. Цвета, ссылки, контуры, анимации (общие правила режима) ---------- */
+
+html[data-a11y="on"][data-a11y-scheme] body {
+  background: var(--c-bg);
+  color: var(--c-text);
+}
+html[data-a11y="on"][data-a11y-scheme] :is(header, footer, aside, details, table, [class~="card"], [class~="hero"], [class~="tile"]):not(#a11y-panel *) {
+  border-color: var(--c-border);
+}
+
+/* Ссылки: всегда подчёркнуты (кроме кнопок) */
+html[data-a11y="on"] a:not([class~="btn"]):not([class~="button"]) {
+  text-decoration: underline;
+  text-decoration-thickness: .12em;
+  text-underline-offset: .18em;
+}
+html[data-a11y="on"][data-a11y-scheme] a:not([class~="btn"]):not([class~="button"]):not(#a11y-panel *) {
+  color: var(--c-primary);
+}
+html[data-a11y="on"][data-a11y-scheme] a:not([class~="btn"]):not([class~="button"]):not(#a11y-panel *):hover {
+  color: var(--c-primary-hover);
+}
+
+/* Ссылки на фоне основного цвета: текст цвета --c-primary-ink
+   (иначе правило выше делает его невидимым) */
+html[data-a11y="on"][data-a11y-scheme] a:is(.skip, .side ul [aria-current="page"]):not([class~="btn"]):not(#a11y-panel *),
+html[data-a11y="on"][data-a11y-scheme] a:is(.skip, .side ul [aria-current="page"]):not([class~="btn"]):not(#a11y-panel *):hover,
+html[data-a11y="on"][data-a11y-scheme] .to-top a:not([class~="btn"]):not([class~="button"]):not(#a11y-panel *):hover {
+  color: var(--c-primary-ink);
+}
+html[data-a11y="on"][data-a11y-scheme] .to-top a {
+  border: 2px solid var(--c-border);
+}
+
+/* Кнопки: видимая рамка */
+html[data-a11y="on"][data-a11y-scheme] :is(button, [class~="btn"], [class~="button"], input, select, textarea):not(#a11y-panel *) {
+  border: 2px solid var(--c-border);
+}
+html[data-a11y="on"][data-a11y-scheme] .eye-btn:not(#a11y-panel *) {
+  background: var(--c-surface-2);
+  color: var(--c-text);
+  border: 2px solid var(--c-border);
+}
+html[data-a11y="on"][data-a11y-scheme] .eye-btn[aria-expanded="true"] {
+  background: var(--c-primary);
+  color: var(--c-primary-ink);
+}
+
+/* Таблицы: видимые границы */
+html[data-a11y="on"] :is(table, th, td) {
+  border-color: var(--c-border);
+}
+html[data-a11y="on"][data-a11y-scheme] :is(th, td) {
+  border-width: 1px;
+  border-style: solid;
+}
+html[data-a11y="on"][data-a11y-scheme] :is(th, thead td) {
+  background: var(--c-surface-2);
+  color: var(--c-text);
+}
+
+/* Границы у блоков, если у них есть свой фон-поверхность */
+html[data-a11y="on"][data-a11y-scheme] :is([class~="card"], [class~="hero"], [class~="page-head"], [class~="panel"], [class~="toc"], [class~="contact"], [class~="pager__link"], [class~="side-card"], [class~="side-mobile"], [class~="mobile-menu__toggle"], [class~="mobile-menu__panel"]):not(#a11y-panel *) {
+  border: 2px solid var(--c-border);
+}
+
+/* Метка «данные не подтверждены» */
+html[data-a11y="on"] .todo {
+  background: var(--c-todo-bg, #FFEB3B);
+  color: var(--c-todo-ink, #000);
+  outline: 2px dashed currentColor;
+  outline-offset: 1px;
+}
+
+/* Видимый фокус */
+html[data-a11y="on"] :focus-visible {
+  outline: 4px solid var(--c-focus, #2F5BFF);
+  outline-offset: 3px;
+}
+
+/* Без анимаций и плавной прокрутки */
+html[data-a11y="on"],
+html[data-a11y="on"] *,
+html[data-a11y="on"] *::before,
+html[data-a11y="on"] *::after {
+  transition: none !important;
+  animation: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* ---------- 7. Панель настроек ---------- */
+/* Панель стилизуется собственными правилами, чтобы выглядеть одинаково
+   и до включения режима (сайт без режима не меняется), и во всех схемах. */
+
+#a11y-panel {
+  --p-bg: var(--c-surface, #F3F6FF);
+  --p-btn: var(--c-bg, #FFFFFF);
+  --p-text: var(--c-text, #101828);
+  --p-border: var(--c-border, #D0D5DD);
+  --p-strong: var(--c-text, #101828);
+  --p-on-bg: var(--c-primary, #2F5BFF);
+  --p-on-ink: var(--c-primary-ink, #FFFFFF);
+  --p-focus: var(--c-focus, #2F5BFF);
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 1rem 16px 1.25rem;
+  background: var(--p-bg);
+  color: var(--p-text);
+  border-bottom: 3px solid var(--p-strong);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-align: left;
+  position: relative;
+  z-index: 50;
+}
+#a11y-panel[hidden] { display: none !important; }
+#a11y-panel *,
+#a11y-panel *::before,
+#a11y-panel *::after {
+  box-sizing: border-box;
+  letter-spacing: normal;
+  word-spacing: normal;
+}
+#a11y-panel :focus-visible {
+  outline: 4px solid var(--p-focus);
+  outline-offset: 3px;
+}
+#a11y-panel :focus:not(:focus-visible) { outline: none; }
+
+.a11y-panel__inner {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.a11y-panel__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  margin: 0 0 1rem;
+}
+.a11y-panel__title {
+  margin: 0;
+  padding: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--p-text);
+}
+.a11y-panel__title:focus { outline: none; }
+.a11y-panel__groups {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem 1.5rem;
+  margin: 0 0 1.25rem;
+}
+@media (min-width: 720px) {
+  #a11y-panel { padding-left: 24px; padding-right: 24px; }
+  .a11y-panel__groups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1100px) {
+  html:not([data-a11y-size="3"]):not([data-a11y-size="4"]) .a11y-panel__groups {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.a11y-group {
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.a11y-group__title {
+  display: block;
+  margin: 0 0 .5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--p-text);
+}
+.a11y-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+.a11y-panel__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  align-items: center;
+}
+
+#a11y-panel button {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  min-width: 44px;
+  min-height: 44px;
+  padding: .5rem .9rem;
+  border: 2px solid var(--p-border);
+  border-radius: 10px;
+  background: var(--p-btn);
+  color: var(--p-text);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: none;
+}
+#a11y-panel button:hover { border-color: var(--p-strong); }
+#a11y-panel button[aria-pressed="true"] {
+  background: var(--p-on-bg);
+  color: var(--p-on-ink);
+  border-color: var(--p-on-bg);
+}
+#a11y-panel button[aria-pressed="true"]::before {
+  content: "\2713\00a0";
+  font-weight: 700;
+}
+#a11y-panel .a11y-reset,
+#a11y-panel .a11y-close {
+  border-color: var(--p-strong);
+}
+#a11y-panel .a11y-reset {
+  background: var(--p-on-bg);
+  color: var(--p-on-ink);
+  border-color: var(--p-on-bg);
+}
+#a11y-panel .a11y-reset:hover { background: var(--c-primary-hover, #2447D6); border-color: var(--c-primary-hover, #2447D6); }
+
+/* Образцы цветовых схем: собственные фиксированные цвета */
+#a11y-panel button.a11y-swatch { font-weight: 700; }
+#a11y-panel button.a11y-swatch[data-value=""]      { background: #FFFFFF; color: #101828; }
+#a11y-panel button.a11y-swatch[data-value="bw"]    { background: #FFFFFF; color: #000000; }
+#a11y-panel button.a11y-swatch[data-value="wb"]    { background: #000000; color: #FFFFFF; }
+#a11y-panel button.a11y-swatch[data-value="blue"]  { background: #9DD1FF; color: #063462; }
+#a11y-panel button.a11y-swatch[data-value="brown"] { background: #3B2716; color: #A9E44D; }
+#a11y-panel button.a11y-swatch[aria-pressed="true"] {
+  border-color: var(--p-strong);
+  box-shadow: 0 0 0 3px var(--p-bg), 0 0 0 6px var(--p-strong);
+  margin: 0 .25rem;
+}
+#a11y-panel button.a11y-swatch[aria-pressed="true"]::before { content: "\2713\00a0"; }
+#a11y-panel button.a11y-swatch[data-value=""][aria-pressed="true"],
+#a11y-panel button.a11y-swatch[data-value="bw"][aria-pressed="true"],
+#a11y-panel button.a11y-swatch[data-value="wb"][aria-pressed="true"],
+#a11y-panel button.a11y-swatch[data-value="blue"][aria-pressed="true"],
+#a11y-panel button.a11y-swatch[data-value="brown"][aria-pressed="true"] {
+  /* цвета образца не меняются при нажатии */
+  background-color: inherit;
+}
+#a11y-panel button.a11y-swatch[data-value=""][aria-pressed="true"]      { background: #FFFFFF; color: #101828; }
+#a11y-panel button.a11y-swatch[data-value="bw"][aria-pressed="true"]    { background: #FFFFFF; color: #000000; }
+#a11y-panel button.a11y-swatch[data-value="wb"][aria-pressed="true"]    { background: #000000; color: #FFFFFF; }
+#a11y-panel button.a11y-swatch[data-value="blue"][aria-pressed="true"]  { background: #9DD1FF; color: #063462; }
+#a11y-panel button.a11y-swatch[data-value="brown"][aria-pressed="true"] { background: #3B2716; color: #A9E44D; }
+
+/* Скрытая живая область для скринридера */
+#a11y-panel .a11y-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #a11y-panel, #a11y-panel * { transition: none !important; animation: none !important; }
+}
+@media print {
+  #a11y-panel { display: none !important; }
+}
+
+/* Печать из режима для слабовидящих: чёрный текст на белом, как в обычной версии */
+@media print {
+  html[data-a11y="on"][data-a11y-scheme] {
+    --c-bg: #FFFFFF; --c-surface: #FFFFFF; --c-surface-2: #FFFFFF;
+    --c-text: #000000; --c-text-2: #000000; --c-muted: #333333;
+    --c-primary: #000000; --c-primary-hover: #000000; --c-primary-ink: #FFFFFF;
+    --c-border: #999999;
+    color-scheme: light;
+  }
+}
