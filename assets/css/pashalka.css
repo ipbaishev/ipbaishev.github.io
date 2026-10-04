@@ -1,0 +1,180 @@
+/*
+ * Пасхалка (страница /pashalka/, скрипт pashalka.js).
+ * Цвета — только из переменных темы (см. main.css), поэтому яйцо
+ * перекрашивается вместе с версией для слабовидящих (a11y.css).
+ */
+.egg {
+  --egg-star: #F5B400;
+  display: grid;
+  gap: 1.25rem;
+  justify-items: center;
+  max-width: 46rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border-radius: var(--r-xl);
+  background: var(--c-surface);
+}
+.prose > .egg { margin-top: 1.5rem; }
+.prose > .egg + h2 { margin-top: 2.5rem; }
+.egg[hidden],
+.egg [hidden] { display: none !important; }
+
+@media (min-width: 40em) {
+  .egg {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    justify-items: start;
+    gap: 2rem;
+  }
+}
+
+/* Яйцо — кнопка */
+.egg__btn {
+  display: block;
+  margin: 0;
+  padding: 0.5rem;
+  border: 0;
+  border-radius: var(--r-lg);
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.egg__btn:disabled { cursor: default; }
+
+.egg__btn .egg__art {
+  display: block;
+  width: 11rem;
+  height: auto;
+  overflow: visible;
+  fill: none;
+  stroke: none;
+  transform-origin: 50% 95%;
+}
+.egg__btn:not(:disabled):hover .egg__art { transform: rotate(-3deg); }
+.egg__btn .egg__art { transition: transform 0.15s ease; }
+.egg__btn.is-hit .egg__art { animation: egg-wobble 0.4s ease; }
+
+@keyframes egg-wobble {
+  0%   { transform: rotate(0); }
+  20%  { transform: rotate(-7deg); }
+  45%  { transform: rotate(6deg); }
+  70%  { transform: rotate(-3deg); }
+  100% { transform: rotate(0); }
+}
+
+/* Скорлупа «Фаберже» */
+.egg__body { fill: var(--c-primary); }
+.egg__gold { fill: var(--tile-2-bg); }
+.egg__gold-line { fill: none; stroke: var(--tile-2-bg); stroke-width: 3; stroke-linejoin: round; }
+.egg__pearls { stroke: var(--c-bg); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 0 12; }
+.egg__shine { fill: var(--c-bg); opacity: 0.22; }
+.egg__medal { fill: var(--c-bg); stroke: var(--tile-2-bg); stroke-width: 4; }
+.egg__letter {
+  fill: var(--c-primary);
+  font-family: var(--font-body);
+  font-size: 26px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.egg__shadow { fill: var(--c-border); opacity: 0.6; }
+
+/* Трещины появляются по одной */
+.egg__crack {
+  fill: none;
+  stroke: var(--c-text);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.egg__crack.is-shown { opacity: 1; }
+
+/* Яйцо раскрывается: верхняя половина откидывается, внутри — звезда */
+.egg__half {
+  transform-box: view-box;
+  transform-origin: 100px 200px;
+  transition: transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.egg__inside {
+  opacity: 0;
+  transform-box: view-box;
+  transform-origin: 100px 196px;
+  transform: scale(0.4);
+  transition: opacity 0.3s ease, transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.egg__glow { fill: var(--tile-2-bg); }
+.egg__star { fill: var(--egg-star); stroke: var(--tile-2-num); stroke-width: 2; stroke-linejoin: round; }
+.egg__sparks { fill: none; stroke: var(--tile-2-num); stroke-width: 3; stroke-linecap: round; }
+
+.egg.is-open .egg__half--top { transform: translate(0, -70px) rotate(-14deg); }
+.egg.is-open .egg__inside { opacity: 1; transform: translate(0, -30px); transition-delay: 0.1s; }
+.egg.is-open .egg__crack { opacity: 0; }
+
+/* Текст рядом с яйцом */
+.egg__panel { width: 100%; min-width: 0; }
+.egg__panel > div > * + * { margin-top: 0.75rem; }
+.egg__title { font-size: 1.25rem; }
+.egg__title:focus { outline: none; }
+.egg__hint { color: var(--c-text-2); }
+.egg__left { font-weight: 600; }
+.egg__text {
+  color: var(--c-text);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+.egg__tip { color: var(--c-muted); font-size: 0.9375rem; }
+.egg__tip:empty { display: none; }
+
+.egg__tools { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.egg__panel .egg__tools { margin-top: 1.125rem; }
+.egg__tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: 2.75rem;
+  margin: 0;
+  padding: 0.5rem 1.125rem 0.5rem 0.875rem;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--c-bg);
+  color: var(--c-primary);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.egg__tool:hover { background: var(--c-primary); color: var(--c-primary-ink); }
+.egg__tool svg[aria-hidden="true"] { width: 1.125rem; height: 1.125rem; }
+
+/* Клавиши секретного кода */
+.keys { white-space: normal; }
+.keys kbd {
+  display: inline-block;
+  min-width: 1.75em;
+  padding: 0 0.375em;
+  border: 1px solid var(--c-border);
+  border-bottom-width: 2px;
+  border-radius: 0.375rem;
+  background: var(--c-surface);
+  color: var(--c-text);
+  font: inherit;
+  font-size: 0.875em;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Версия для слабовидящих: рамки как у остальных блоков; основной цвет
+   и цвет текста в схемах совпадают, поэтому трещины — цветом фона */
+html[data-a11y="on"][data-a11y-scheme] .egg { --egg-star: var(--c-bg); border: 2px solid var(--c-border); }
+html[data-a11y="on"][data-a11y-scheme] .egg__crack { stroke: var(--c-bg); }
+html[data-a11y="on"][data-a11y-scheme] .keys kbd { border: 2px solid var(--c-border); }
+
+@media print {
+  .egg { display: none !important; }
+}
